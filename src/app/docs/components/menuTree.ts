@@ -76,6 +76,18 @@ const menuTree = [
         path: "/docs/typography/liquid-text",
       },
       {
+        id: "dissolve-text",
+        name: "디졸브 텍스트",
+        description: "먼지처럼 흩어지며 사라지는 디졸브 효과",
+        path: "/docs/typography/dissolve-text",
+      },
+      {
+        id: "pixel-dissolve-text",
+        name: "픽셀 디졸브 텍스트",
+        description: "레트로 게임 스타일 픽셀화 + 디졸브 효과",
+        path: "/docs/typography/pixel-dissolve-text",
+      },
+      {
         id: "playground",
         name: "플레이그라운드",
         description: "플레이그라운드",
@@ -150,6 +162,34 @@ const menuTree = [
         name: "마그네틱 커서",
         description: "마그네틱 커서",
         path: "/docs/cursor/magnetic",
+      },
+    ],
+  },
+  {
+    category: "Background",
+    items: [
+      {
+        id: "noise-grain-bg",
+        name: "노이즈 그레인 배경",
+        description: "SVG 필터 기반 필름 그레인 노이즈 오버레이",
+        path: "/docs/background/noise-grain-bg",
+      },
+      {
+        id: "dot-grid-bg",
+        name: "도트 그리드 배경",
+        description: "마우스에 반응하는 인터랙티브 도트 그리드",
+        path: "/docs/background/dot-grid-bg",
+      },
+    ],
+  },
+  {
+    category: "Card",
+    items: [
+      {
+        id: "glassmorphism-card",
+        name: "글래스모피즘 카드",
+        description: "블러와 빛 반사 효과의 유리 질감 카드",
+        path: "/docs/card/glassmorphism-card",
       },
     ],
   },
