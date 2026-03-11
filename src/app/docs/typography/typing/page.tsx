@@ -53,89 +53,8 @@ export default function TypographyAnimationPage() {
 
   // 코드 복사 핸들러
   const handleCopyCode = () => {
-    const code = `"use client";
-import { useState, useEffect } from "react";
-
-interface TypingTextProps {
-  text: string;
-  speed?: number;
-  delay?: number;
-  className?: string;
-  cursorChar?: string;
-  showCursor?: boolean;
-  loop?: boolean;
-  cursorClassName?: string;
-  textClassName?: string;
-}
-
-/**
- * TypingText 컴포넌트
- * - 텍스트가 타이핑되는 애니메이션 효과를 보여줍니다.
- * - 다양한 타이포그래피 스타일과 커서 옵션을 지원합니다.
- */
-export default function TypingText({
-  text,
-  speed = 100,
-  delay = 0,
-  className = "",
-  cursorChar = "|",
-  showCursor = true,
-  loop = false,
-  cursorClassName = "",
-  textClassName = "",
-}: TypingTextProps) {
-  const [displayText, setDisplayText] = useState("");
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isTyping, setIsTyping] = useState(false);
-
-  useEffect(() => {
-    if (delay > 0) {
-      const timer = setTimeout(() => {
-        setIsTyping(true);
-      }, delay);
-      return () => clearTimeout(timer);
-    } else {
-      setIsTyping(true);
-    }
-  }, [delay]);
-
-  useEffect(() => {
-    if (!isTyping) return;
-
-    if (currentIndex < text.length) {
-      const timer = setTimeout(() => {
-        setDisplayText(text.slice(0, currentIndex + 1));
-        setCurrentIndex(currentIndex + 1);
-      }, speed);
-
-      return () => clearTimeout(timer);
-    } else if (loop) {
-      const timer = setTimeout(() => {
-        setDisplayText("");
-        setCurrentIndex(0);
-      }, 1000);
-
-      return () => clearTimeout(timer);
-    }
-  }, [currentIndex, text, speed, isTyping, loop]);
-
-  return (
-    <div className={\`\${className} \${textClassName}\`}>
-      <span>{displayText}</span>
-      {showCursor && (
-        <span className={\`animate-pulse \${cursorClassName}\`}>
-          {cursorChar}
-        </span>
-      )}
-    </div>
-  );
-}`;
+    const code = typingTextCode;
     navigator.clipboard.writeText(code);
-  };
-
-  // 전체 스니펫 보기 핸들러
-  const handleSeeFullSnippet = () => {
-    console.log("Show full snippet");
   };
 
   // Usage 예제 코드
@@ -479,7 +398,6 @@ export default function TypingText({
         codeContent={typingTextCode}
         codeLanguage="typescript"
         onCopyCode={handleCopyCode}
-        onSeeFullSnippet={handleSeeFullSnippet}
         controlPanel={controlPanel}
       />
 

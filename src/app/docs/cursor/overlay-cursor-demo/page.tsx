@@ -27,11 +27,6 @@ export default function OverlayCursorDemoPage() {
     navigator.clipboard.writeText(overlayCursorCode);
   };
 
-  // 전체 스니펫 보기 핸들러
-  const handleSeeFullSnippet = () => {
-    console.log("Show full snippet");
-  };
-
   // Usage 예제 코드
   const usageExample = `import OverlayCursorProvider from "@/components/common/framer-motion/cursor/OverlayCursor";
 
@@ -358,7 +353,6 @@ export default function OverlayCursorProvider({
         codeContent={overlayCursorCode}
         codeLanguage="typescript"
         onCopyCode={handleCopyCode}
-        onSeeFullSnippet={handleSeeFullSnippet}
         controlPanel={controlPanel}
       />
 

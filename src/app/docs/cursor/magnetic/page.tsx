@@ -38,11 +38,6 @@ export default function MagneticCursorDocsPage() {
     navigator.clipboard.writeText(magneticCursorCode);
   };
 
-  // 전체 스니펫 보기 핸들러
-  const handleSeeFullSnippet = () => {
-    console.log("Show full snippet");
-  };
-
   // Usage 예제 코드
   const usageExample = `import MagneticCursor from "@/components/common/framer-motion/cursor/MagneticCursor";
 import MagneticTargetBox from "@/components/common/framer-motion/cursor/MagneticTargetBox";
@@ -440,7 +435,6 @@ export function MagneticTargetBox({ children, className = "" }: MagneticTargetBo
         codeContent={magneticCursorCode}
         codeLanguage="typescript"
         onCopyCode={handleCopyCode}
-        onSeeFullSnippet={handleSeeFullSnippet}
         controlPanel={controlPanel}
       />
 

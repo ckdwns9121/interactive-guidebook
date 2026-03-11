@@ -23,141 +23,8 @@ export default function MorphingTextPage() {
 
   // 코드 복사 핸들러
   const handleCopyCode = () => {
-    const code = `"use client";
-import { useEffect, useRef } from "react";
-
-interface MorphingTextProps {
-  texts: string[];
-  morphTime?: number; // morph 애니메이션 시간(초)
-  cooldownTime?: number; // 쿨다운 시간(초)
-  color?: string;
-  className?: string;
-}
-
-/**
- * MorphingText
- * - 두 개의 텍스트를 겹쳐서 blur + threshold SVG 필터로 morphing 효과를 만듭니다.
- * - 반응형, 커스텀 텍스트, 폰트, 색상, 속도 props 지원
- * - 예시: <MorphingText texts={["Why", "is", "this", "cool?"]} />
- */
-const MorphingText: React.FC<MorphingTextProps> = ({
-  texts,
-  morphTime = 1,
-  cooldownTime = 0.25,
-  color = "#222",
-  className,
-}) => {
-  const text1Ref = useRef<HTMLSpanElement>(null);
-  const text2Ref = useRef<HTMLSpanElement>(null);
-
-  // 내부 상태
-  const textIndex = useRef(texts.length - 1);
-  const time = useRef(new Date());
-  const morph = useRef(0);
-  const cooldown = useRef(cooldownTime);
-
-  useEffect(() => {
-    const elts = {
-      text1: text1Ref.current!,
-      text2: text2Ref.current!,
-    };
-    if (!elts.text1 || !elts.text2) return;
-
-    elts.text1.textContent = texts[textIndex.current % texts.length];
-    elts.text2.textContent = texts[(textIndex.current + 1) % texts.length];
-
-    function setMorph(fraction: number) {
-      elts.text2.style.filter = \`blur(\${Math.min(8 / fraction - 8, 100)}px)\`;
-      elts.text2.style.opacity = \`\${Math.pow(fraction, 0.4) * 100}%\`;
-
-      const inv = 1 - fraction;
-      elts.text1.style.filter = \`blur(\${Math.min(8 / inv - 8, 100)}px)\`;
-      elts.text1.style.opacity = \`\${Math.pow(inv, 0.4) * 100}%\`;
-
-      elts.text1.textContent = texts[textIndex.current % texts.length];
-      elts.text2.textContent = texts[(textIndex.current + 1) % texts.length];
-    }
-
-    function doMorph() {
-      morph.current -= cooldown.current;
-      cooldown.current = 0;
-      let fraction = morph.current / morphTime;
-      if (fraction > 1) {
-        cooldown.current = cooldownTime;
-        fraction = 1;
-      }
-      setMorph(fraction);
-    }
-
-    function doCooldown() {
-      morph.current = 0;
-      elts.text2.style.filter = "";
-      elts.text2.style.opacity = "100%";
-      elts.text1.style.filter = "";
-      elts.text1.style.opacity = "0%";
-    }
-
-    function animate() {
-      requestAnimationFrame(animate);
-      const newTime = new Date();
-      const shouldIncrementIndex = cooldown.current > 0;
-      const dt = (+newTime - +time.current) / 1000;
-      time.current = newTime;
-      cooldown.current -= dt;
-      if (cooldown.current <= 0) {
-        if (shouldIncrementIndex) textIndex.current++;
-        doMorph();
-      } else {
-        doCooldown();
-      }
-    }
-    animate();
-  }, [texts, morphTime, cooldownTime]);
-
-  return (
-    <div
-      style={{
-        filter: "url(#threshold) blur(0.6px)",
-      }}
-      className={\`\${className} relative inline-block whitespace-nowrap\`}
-    >
-      {/* SVG 필터 정의 */}
-      <svg className="hidden">
-        <defs>
-          <filter id="threshold">
-            <feColorMatrix in="SourceGraphic" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 255 -140" />
-          </filter>
-        </defs>
-      </svg>
-      <span
-        ref={text1Ref}
-        className="absolute inset-0 font-sans select-none"
-        style={{
-          color,
-        }}
-      />
-      <span
-        ref={text2Ref}
-        className="absolute inset-0 font-sans select-none"
-        style={{
-          color,
-        }}
-      />
-      {/* 숨겨진 더미 텍스트로 컨테이너 크기 설정 */}
-      <span className="font-sans opacity-0 select-none" aria-hidden="true">
-        {texts[0] || ""}
-      </span>
-    </div>
-  );
-};
-
-export default MorphingText;`;
+    const code = morphingTextCode;
     navigator.clipboard.writeText(code);
-  };
-
-  // 전체 스니펫 보기 핸들러
-  const handleSeeFullSnippet = () => {
-    console.log("Show full snippet");
   };
 
   // Usage 예제 코드
@@ -520,7 +387,6 @@ export default MorphingText;`;
         codeContent={morphingTextCode}
         codeLanguage="typescript"
         onCopyCode={handleCopyCode}
-        onSeeFullSnippet={handleSeeFullSnippet}
         controlPanel={controlPanel}
       />
 

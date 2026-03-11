@@ -38,11 +38,6 @@ export default function ZoomScrollBgPage() {
     navigator.clipboard.writeText(zoomScrollBgCode);
   };
 
-  // 전체 스니펫 보기 핸들러
-  const handleSeeFullSnippet = () => {
-    console.log("Show full snippet");
-  };
-
   const titleClassName = `${blendMode} ${titleSize} ${titleWeight} ${titleColor}`;
 
   // Usage 예제 코드
@@ -403,7 +398,6 @@ export default function ZoomScrollBg({
         codeContent={zoomScrollBgCode}
         codeLanguage="typescript"
         onCopyCode={handleCopyCode}
-        onSeeFullSnippet={handleSeeFullSnippet}
         controlPanel={controlPanel}
       />
 

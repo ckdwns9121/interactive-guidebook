@@ -37,11 +37,6 @@ export default function AnimatedTextListPage() {
     navigator.clipboard.writeText(animatedListCode);
   };
 
-  // 전체 스니펫 보기 핸들러
-  const handleSeeFullSnippet = () => {
-    console.log("Show full snippet");
-  };
-
   // Usage 예제 코드
   const usageExample = `import AnimatedTextListWithCursor from "@/components/common/framer-motion/AnimatedTextListWithCursor";
 
@@ -399,7 +394,6 @@ export default function AnimatedTextListWithCursor({
         codeContent={animatedListCode}
         codeLanguage="typescript"
         onCopyCode={handleCopyCode}
-        onSeeFullSnippet={handleSeeFullSnippet}
         controlPanel={controlPanel}
       />
 

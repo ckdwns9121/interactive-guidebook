@@ -1,22 +1,15 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, CSSProperties } from "react";
+import { DOT_GRID_BACKGROUND } from "@/styles/backgrounds";
 
-/**
- * 결과물 데모를 위한 재사용 가능한 박스 컴포넌트입니다.
- * - 내부에 점(dot) grid 배경이 적용됩니다.
- * - 우측 상단에 리셋 버튼이 있습니다.
- * - children으로 데모 컴포넌트를 전달하세요.
- * - 반응형 및 접근성을 고려했습니다.
- */
 export interface DemoContainerProps {
   children: React.ReactNode;
   onReset?: () => void;
-  style?: React.CSSProperties;
+  style?: CSSProperties;
   className?: string;
 }
 
 const DemoContainer = ({ children, onReset, style, className = "" }: DemoContainerProps) => {
-  // 리셋 버튼 클릭 시 애니메이션 리셋을 위해 내부 key를 변경합니다.
   const [resetKey, setResetKey] = useState(0);
 
   const handleReset = () => {
@@ -27,13 +20,7 @@ const DemoContainer = ({ children, onReset, style, className = "" }: DemoContain
   return (
     <div
       className={`w-full relative overflow-hidden rounded-xl border border-gray-200 dark:border-neutral-800 bg-[#1a1a1a] p-6 sm:p-8 flex justify-center min-h-[120px] ${className}`}
-      style={{
-        ...style,
-        backgroundImage:
-          "radial-gradient(circle, #444 1.5px, transparent 1.5px), radial-gradient(circle, #222 1.5px, transparent 1.5px)",
-        backgroundSize: "20px 20px",
-        backgroundPosition: "0 0, 10px 10px",
-      }}
+      style={{ ...DOT_GRID_BACKGROUND, ...style }}
     >
       <button
         onClick={handleReset}

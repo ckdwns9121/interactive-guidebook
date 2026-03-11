@@ -10,9 +10,10 @@ import React, { useRef, useEffect } from "react";
 interface MagneticTargetBoxProps {
   children: React.ReactNode;
   className?: string;
+  style?: React.CSSProperties;
 }
 
-export default function MagneticTargetBox({ children, className }: MagneticTargetBoxProps) {
+export default function MagneticTargetBox({ children, className, style }: MagneticTargetBoxProps) {
   const boxRef = useRef<HTMLDivElement>(null);
 
   // 마우스가 박스 위에 들어오고 나갈 때 커스텀 이벤트 디스패치
@@ -43,6 +44,7 @@ export default function MagneticTargetBox({ children, className }: MagneticTarge
   return (
     <div
       ref={boxRef}
+      style={style}
       className={`${className} relative flex min-h-[48px] min-w-[120px] cursor-pointer select-none items-center justify-center border border-dashed border-white bg-transparent text-2xl font-semibold text-white transition-shadow duration-200`}
     >
       {children}

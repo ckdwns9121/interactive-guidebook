@@ -70,6 +70,12 @@ const menuTree = [
         path: "/docs/typography/paint-fill-text",
       },
       {
+        id: "liquid-text",
+        name: "리퀴드 텍스트",
+        description: "SVG 필터로 액체처럼 흐르는 왜곡 텍스트",
+        path: "/docs/typography/liquid-text",
+      },
+      {
         id: "playground",
         name: "플레이그라운드",
         description: "플레이그라운드",

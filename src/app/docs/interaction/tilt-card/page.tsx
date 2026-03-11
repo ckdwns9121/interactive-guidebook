@@ -41,11 +41,6 @@ export default function TiltCardDocsPage() {
     navigator.clipboard.writeText(tiltCardCode);
   };
 
-  // 전체 스니펫 보기 핸들러
-  const handleSeeFullSnippet = () => {
-    console.log("Show full snippet");
-  };
-
   // Usage 예제 코드
   const usageExample = `import TiltCard from "@/components/common/effects/TiltCard";
 
@@ -430,7 +425,6 @@ export default function TiltCard({
         codeContent={tiltCardCode}
         codeLanguage="typescript"
         onCopyCode={handleCopyCode}
-        onSeeFullSnippet={handleSeeFullSnippet}
         controlPanel={controlPanel}
       />
 

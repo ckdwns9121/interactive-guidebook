@@ -32,87 +32,8 @@ export default function RevealTextDocsPage() {
 
   // 코드 복사 핸들러
   const handleCopyCode = () => {
-    const code = `"use client";
-import React from "react";
-import { motion } from "framer-motion";
-
-interface RevealTextProps {
-  text: string;
-  className?: string;
-  style?: React.CSSProperties;
-  direction?: "up" | "down" | "left" | "right";
-  delay?: number;
-  duration?: number;
-  stagger?: number;
-  byWord?: boolean;
-}
-
-/**
- * RevealText
- * - 텍스트가 한 글자씩 또는 한 단어씩 자연스럽게 나타나는 Reveal Animation
- * - direction, delay, duration, stagger 등 커스텀 prop 지원
- * - framer-motion의 motion.span 활용
- * - 반응형 및 접근성 고려
- */
-const RevealText: React.FC<RevealTextProps> = ({
-  text,
-  className,
-  style,
-  direction = "up",
-  delay = 0,
-  duration = 0.5,
-  stagger = 0.04,
-  byWord = false,
-}) => {
-  // direction에 따라 초기 위치 설정
-  const getInitial = () => {
-    switch (direction) {
-      case "up":
-        return { y: "100%", opacity: 0 };
-      case "down":
-        return { y: "-100%", opacity: 0 };
-      case "left":
-        return { x: "-100%", opacity: 0 };
-      case "right":
-        return { x: "100%", opacity: 0 };
-      default:
-        return { y: "100%", opacity: 0 };
-    }
-  };
-
-  // 텍스트를 글자 또는 단어 단위로 분리
-  const units = byWord ? text.split(" ") : Array.from(text);
-
-  return (
-    <span className={\`\${className} inline-block overflow-hidden\`} style={style} aria-label={text} role="text">
-      {units.map((unit, i) => (
-        <React.Fragment key={i}>
-          <motion.span
-            initial={getInitial()}
-            animate={{ x: 0, y: 0, opacity: 1 }}
-            transition={{
-              delay: delay + i * stagger,
-              duration,
-              ease: "easeOut",
-            }}
-            className="inline-block"
-          >
-            {unit === " " ? "\\u00A0" : unit}
-          </motion.span>
-          {byWord && i < units.length - 1 && <span className="inline-block">\\u00A0</span>}
-        </React.Fragment>
-      ))}
-    </span>
-  );
-};
-
-export default RevealText;`;
+    const code = revealTextCode;
     navigator.clipboard.writeText(code);
-  };
-
-  // 전체 스니펫 보기 핸들러
-  const handleSeeFullSnippet = () => {
-    console.log("Show full snippet");
   };
 
   // Usage 예제 코드
@@ -491,7 +412,6 @@ export default RevealText;`;
         codeContent={revealTextCode}
         codeLanguage="typescript"
         onCopyCode={handleCopyCode}
-        onSeeFullSnippet={handleSeeFullSnippet}
         controlPanel={controlPanel}
       />
 

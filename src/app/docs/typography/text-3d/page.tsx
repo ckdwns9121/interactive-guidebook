@@ -6,7 +6,6 @@ import ControlPanelWrapper from "@/components/common/ControlPanelWrapper";
 import IdeaConcretizationSection from "@/components/common/IdeaConcretizationSection";
 import BasicPromptSection from "@/components/common/BasicPromptSection";
 import Title from "../../components/Title";
-import { TEXT_3D_INFO } from "./constants";
 
 export default function Text3DPage() {
   // 컨트롤 상태
@@ -34,11 +33,6 @@ export default function Text3DPage() {
   // 코드 복사 핸들러
   const handleCopyCode = () => {
     navigator.clipboard.writeText(text3DCode);
-  };
-
-  // 전체 스니펫 보기 핸들러
-  const handleSeeFullSnippet = () => {
-    console.log("Show full snippet");
   };
 
   // Usage 예제 코드
@@ -594,7 +588,6 @@ export default function Text3D({
         codeContent={text3DCode}
         codeLanguage="typescript"
         onCopyCode={handleCopyCode}
-        onSeeFullSnippet={handleSeeFullSnippet}
         controlPanel={controlPanel}
       />
 

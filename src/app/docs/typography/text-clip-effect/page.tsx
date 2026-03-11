@@ -6,14 +6,65 @@ import ControlPanelWrapper from "@/components/common/ControlPanelWrapper";
 import IdeaConcretizationSection from "@/components/common/IdeaConcretizationSection";
 import BasicPromptSection from "@/components/common/BasicPromptSection";
 import Title from "../../components/Title";
-import {
-  TEXT_CLIP_EFFECT_DEFAULTS,
-  FONT_SIZE_OPTIONS,
-  FONT_WEIGHT_OPTIONS,
-  COLOR_PRESETS,
-  SCROLL_TRIGGER_POSITIONS,
-  END_POSITIONS,
-} from "./constants";
+const TEXT_CLIP_EFFECT_DEFAULTS = {
+  items: [
+    { main: "Hello", sub: "Hello" },
+    { main: "javascript", sub: "javascript" },
+    { main: "typescript", sub: "typescript" },
+  ],
+  clipColor: "#ff6b6b",
+  fontSize: "text-4xl",
+  fontWeight: "font-bold",
+  showMarkers: false,
+  startPosition: "top center",
+  endPosition: "bottom center",
+  scrubEffect: false,
+};
+
+const FONT_SIZE_OPTIONS = [
+  { value: "text-2xl", label: "2XL" },
+  { value: "text-3xl", label: "3XL" },
+  { value: "text-4xl", label: "4XL" },
+  { value: "text-5xl", label: "5XL" },
+  { value: "text-6xl", label: "6XL" },
+];
+
+const FONT_WEIGHT_OPTIONS = [
+  { value: "font-normal", label: "Normal" },
+  { value: "font-medium", label: "Medium" },
+  { value: "font-semibold", label: "Semibold" },
+  { value: "font-bold", label: "Bold" },
+  { value: "font-black", label: "Black" },
+];
+
+const COLOR_PRESETS = [
+  { value: "#ff6b6b", label: "Red" },
+  { value: "#4ecdc4", label: "Teal" },
+  { value: "#45b7d1", label: "Blue" },
+  { value: "#96ceb4", label: "Green" },
+  { value: "#ffeaa7", label: "Yellow" },
+  { value: "#dfe6e9", label: "Gray" },
+  { value: "#a29bfe", label: "Purple" },
+  { value: "#fd79a8", label: "Pink" },
+];
+
+const SCROLL_TRIGGER_POSITIONS = [
+  { value: "top bottom", label: "Top Bottom" },
+  { value: "top center", label: "Top Center" },
+  { value: "top top", label: "Top Top" },
+  { value: "center bottom", label: "Center Bottom" },
+  { value: "center center", label: "Center Center" },
+  { value: "center top", label: "Center Top" },
+];
+
+const END_POSITIONS = [
+  { value: "bottom bottom", label: "Bottom Bottom" },
+  { value: "bottom center", label: "Bottom Center" },
+  { value: "bottom top", label: "Bottom Top" },
+  { value: "center bottom", label: "Center Bottom" },
+  { value: "center center", label: "Center Center" },
+  { value: "center top", label: "Center Top" },
+];
 
 export default function TextClipEffectPage() {
   // 컨트롤 상태
@@ -32,11 +83,6 @@ export default function TextClipEffectPage() {
   // 코드 복사 핸들러
   const handleCopyCode = () => {
     navigator.clipboard.writeText(textClipEffectCode);
-  };
-
-  // 전체 스니펫 보기 핸들러
-  const handleSeeFullSnippet = () => {
-    console.log("Show full snippet");
   };
 
   // 텍스트 배열을 문자열로 변환/파싱하는 헬퍼 함수
@@ -407,7 +453,6 @@ export default function TextClipEffectItem({
         codeContent={textClipEffectCode}
         codeLanguage="typescript"
         onCopyCode={handleCopyCode}
-        onSeeFullSnippet={handleSeeFullSnippet}
         controlPanel={controlPanel}
       />
 

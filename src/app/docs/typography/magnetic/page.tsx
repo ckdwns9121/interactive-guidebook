@@ -26,143 +26,8 @@ export default function MagneticLettersPage() {
 
   // 코드 복사 핸들러
   const handleCopyCode = () => {
-    const code = `"use client";
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { useRef, useState, useEffect } from "react";
-
-interface MagneticLettersProps {
-  text: string;
-  strength?: number;
-  threshold?: number;
-  stiffness?: number;
-  damping?: number;
-  textColor?: string;
-  className?: string;
-}
-
-/**
- * MagneticLetters 컴포넌트
- * - 마우스 커서에 반응하여 텍스트가 자석처럼 끌리는 효과를 보여줍니다.
- * - 각 글자가 개별적으로 마우스 위치에 반응합니다.
- */
-export function MagneticLetters({
-  text,
-  strength = 40,
-  threshold = 6,
-  stiffness = 400,
-  damping = 30,
-  textColor = "#ffffff",
-  className = "",
-}: MagneticLettersProps) {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
-    };
-
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
-
-  return (
-    <div ref={containerRef} className={\`flex items-center justify-center \${className}\`}>
-      {text.split("").map((letter, index) => (
-        <MagneticLetter
-          key={index}
-          letter={letter}
-          mousePosition={mousePosition}
-          containerRef={containerRef}
-          strength={strength}
-          threshold={threshold}
-          stiffness={stiffness}
-          damping={damping}
-          textColor={textColor}
-        />
-      ))}
-    </div>
-  );
-}
-
-interface MagneticLetterProps {
-  letter: string;
-  mousePosition: { x: number; y: number };
-  containerRef: React.RefObject<HTMLDivElement>;
-  strength: number;
-  threshold: number;
-  stiffness: number;
-  damping: number;
-  textColor: string;
-}
-
-function MagneticLetter({
-  letter,
-  mousePosition,
-  containerRef,
-  strength,
-  threshold,
-  stiffness,
-  damping,
-  textColor,
-}: MagneticLetterProps) {
-  const letterRef = useRef<HTMLDivElement>(null);
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-
-  const springX = useSpring(x, { stiffness, damping });
-  const springY = useSpring(y, { stiffness, damping });
-
-  useEffect(() => {
-    if (!letterRef.current || !containerRef.current) return;
-
-    const letterRect = letterRef.current.getBoundingClientRect();
-    const containerRect = containerRef.current.getBoundingClientRect();
-
-    const letterCenterX = letterRect.left + letterRect.width / 2 - containerRect.left;
-    const letterCenterY = letterRect.top + letterRect.height / 2 - containerRect.top;
-
-    const mouseX = mousePosition.x - containerRect.left;
-    const mouseY = mousePosition.y - containerRect.top;
-
-    const distance = Math.sqrt(
-      Math.pow(mouseX - letterCenterX, 2) + Math.pow(mouseY - letterCenterY, 2)
-    );
-
-    const maxDistance = letterRect.width * threshold;
-
-    if (distance < maxDistance) {
-      const force = (1 - distance / maxDistance) * strength;
-      const angle = Math.atan2(mouseY - letterCenterY, mouseX - letterCenterX);
-
-      x.set(Math.cos(angle) * force);
-      y.set(Math.sin(angle) * force);
-    } else {
-      x.set(0);
-      y.set(0);
-    }
-  }, [mousePosition, strength, threshold, stiffness, damping, x, y]);
-
-  return (
-    <motion.div
-      ref={letterRef}
-      style={{
-        x: springX,
-        y: springY,
-        color: textColor,
-      }}
-      className="inline-block"
-    >
-      {letter}
-    </motion.div>
-  );
-}`;
+    const code = magneticLettersCode;
     navigator.clipboard.writeText(code);
-  };
-
-  // 전체 스니펫 보기 핸들러
-  const handleSeeFullSnippet = () => {
-    console.log("Show full snippet");
   };
 
   // Usage 예제 코드
@@ -577,7 +442,6 @@ function MagneticLetter({
         codeContent={magneticLettersCode}
         codeLanguage="typescript"
         onCopyCode={handleCopyCode}
-        onSeeFullSnippet={handleSeeFullSnippet}
         controlPanel={controlPanel}
       />
 

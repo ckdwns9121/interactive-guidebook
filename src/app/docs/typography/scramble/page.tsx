@@ -47,109 +47,8 @@ export default function ScrambleTextPage() {
 
   // 코드 복사 핸들러
   const handleCopyCode = () => {
-    const code = `"use client";
-import { useState, useEffect } from "react";
-
-interface TextScrambleProps {
-  text: string;
-  speed?: number;
-  delay?: number;
-  loop?: boolean;
-  pauseTime?: number;
-  characters?: string;
-  revealSpeed?: number;
-  trigger?: "auto" | "hover" | "manual";
-  className?: string;
-}
-
-/**
- * TextScramble 컴포넌트
- * - 텍스트가 스크램블되는 애니메이션 효과를 보여줍니다.
- * - 다양한 트리거 방식과 스크램블 옵션을 지원합니다.
- */
-export default function TextScramble({
-  text,
-  speed = 50,
-  delay = 100,
-  loop = false,
-  pauseTime = 1000,
-  characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=[]{}|;:,.<>?",
-  revealSpeed = 100,
-  trigger = "auto",
-  className = "",
-}: TextScrambleProps) {
-  const [displayText, setDisplayText] = useState("");
-  const [isScrambling, setIsScrambling] = useState(false);
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  const scrambleText = (text: string) => {
-    return text
-      .split("")
-      .map(() => characters[Math.floor(Math.random() * characters.length)])
-      .join("");
-  };
-
-  const startScramble = () => {
-    setIsScrambling(true);
-    setCurrentIndex(0);
-    setDisplayText(scrambleText(text));
-  };
-
-  const revealText = () => {
-    if (currentIndex < text.length) {
-      setTimeout(() => {
-        setDisplayText(
-          text.slice(0, currentIndex + 1) + scrambleText(text.slice(currentIndex + 1))
-        );
-        setCurrentIndex(currentIndex + 1);
-      }, revealSpeed);
-    } else {
-      setIsScrambling(false);
-      if (loop) {
-        setTimeout(() => {
-          startScramble();
-        }, pauseTime);
-      }
-    }
-  };
-
-  useEffect(() => {
-    if (trigger === "auto") {
-      const timer = setTimeout(() => {
-        startScramble();
-      }, delay);
-      return () => clearTimeout(timer);
-    }
-  }, [trigger, delay, text]);
-
-  useEffect(() => {
-    if (isScrambling && currentIndex < text.length) {
-      revealText();
-    }
-  }, [isScrambling, currentIndex, text, revealSpeed, loop, pauseTime]);
-
-  const handleMouseEnter = () => {
-    if (trigger === "hover" && !isScrambling) {
-      startScramble();
-    }
-  };
-
-  return (
-    <div
-      className={className}
-      onMouseEnter={handleMouseEnter}
-      style={{ cursor: trigger === "hover" ? "pointer" : "default" }}
-    >
-      {displayText}
-    </div>
-  );
-}`;
+    const code = textScrambleCode;
     navigator.clipboard.writeText(code);
-  };
-
-  // 전체 스니펫 보기 핸들러
-  const handleSeeFullSnippet = () => {
-    console.log("Show full snippet");
   };
 
   // Usage 예제 코드
@@ -542,7 +441,6 @@ export default function TextScramble({
         codeContent={textScrambleCode}
         codeLanguage="typescript"
         onCopyCode={handleCopyCode}
-        onSeeFullSnippet={handleSeeFullSnippet}
         controlPanel={controlPanel}
       />
 
