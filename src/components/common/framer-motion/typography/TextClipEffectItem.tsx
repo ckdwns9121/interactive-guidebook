@@ -30,19 +30,21 @@ export default function TextClipEffectItem({
   const textRef = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
-    if (textRef.current) {
+    const textElement = textRef.current;
+
+    if (textElement) {
       // 기존 ScrollTrigger 제거
       ScrollTrigger.getAll().forEach((trigger) => {
-        if (trigger.trigger === textRef.current) {
+        if (trigger.trigger === textElement) {
           trigger.kill();
         }
       });
 
-      gsap.to(textRef.current, {
+      gsap.to(textElement, {
         backgroundSize: "100%",
         ease: "none",
         scrollTrigger: {
-          trigger: textRef.current,
+          trigger: textElement,
           start: startPosition,
           end: endPosition,
           scrub: scrubEffect,
@@ -54,7 +56,7 @@ export default function TextClipEffectItem({
     return () => {
       // 컴포넌트 언마운트 시 ScrollTrigger 정리
       ScrollTrigger.getAll().forEach((trigger) => {
-        if (trigger.trigger === textRef.current) {
+        if (trigger.trigger === textElement) {
           trigger.kill();
         }
       });

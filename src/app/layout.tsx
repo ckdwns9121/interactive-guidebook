@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"
+  ),
   title: "인터랙티브 바이브 코딩 가이드북",
   description:
     "디자인 없이도, 누구나 쉽게 차별화된 웹을 만들 수 있는 AI 기반 웹 빌더. 반응형, 인터랙션, 퍼포먼스까지 한 번에!",

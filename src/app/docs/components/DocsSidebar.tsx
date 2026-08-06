@@ -5,7 +5,6 @@ import React, { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import menuTree from "./menuTree";
 import Image from "next/image";
-import { Button } from "@mui/material";
 import { cn } from "@/utils/cn";
 
 export default function DocsSidebar() {
@@ -50,29 +49,14 @@ export default function DocsSidebar() {
             const expanded = isMobile ? openIdx === idx : true;
             return (
               <li key={category.category} className="mb-4">
-                <Button
+                <button
+                  type="button"
                   onClick={() => isMobile && handleAccordion(idx)}
                   disabled={!isMobile}
-                  variant="text"
-                  disableRipple={!isMobile}
-                  sx={{
-                    width: "100%",
-                    textAlign: "left",
-                    fontSize: "1.125rem",
-                    fontWeight: "bold",
-                    marginBottom: "0.25rem",
-                    paddingY: "0.25rem",
-                    color: "#fff",
-                    textTransform: "none",
-                    justifyContent: "space-between",
-                    cursor: isMobile ? "pointer" : "default",
-                    "&:hover": {
-                      backgroundColor: isMobile ? "rgba(255, 255, 255, 0.1)" : "transparent",
-                    },
-                    "&.Mui-disabled": {
-                      color: "#fff",
-                    },
-                  }}
+                  className={cn(
+                    "w-full mb-1 rounded px-2 py-1 flex items-center justify-between text-left text-lg font-bold text-white transition-colors",
+                    isMobile ? "cursor-pointer hover:bg-white/10" : "cursor-default",
+                  )}
                   aria-expanded={expanded}
                   aria-controls={`category-panel-${idx}`}
                 >
@@ -80,7 +64,7 @@ export default function DocsSidebar() {
                     {category.category}
                     {isMobile && <span className="text-xs text-[#fff]">{expanded ? "▲" : "▼"}</span>}
                   </span>
-                </Button>
+                </button>
                 <ul
                   id={`category-panel-${idx}`}
                   className={cn("space-y-0.5 pl-3 border-l border-[#eaeaea]", expanded ? "block" : "hidden")}
@@ -91,27 +75,14 @@ export default function DocsSidebar() {
                     return (
                       <li key={item.id}>
                         <Link href={item.path} className="block" aria-current={active ? "page" : undefined}>
-                          <Button
-                            variant="text"
-                            component="div"
-                            sx={{
-                              width: "100%",
-                              paddingY: "0.25rem",
-                              paddingX: "0.5rem",
-                              fontSize: "1rem",
-                              fontWeight: "medium",
-                              textTransform: "none",
-                              justifyContent: "flex-start",
-                              color: active ? "#000" : "#fff",
-                              backgroundColor: active ? "#fafafa" : "transparent",
-                              "&:hover": {
-                                color: "#000",
-                                backgroundColor: "#fafafa",
-                              },
-                            }}
+                          <div
+                            className={cn(
+                              "w-full rounded px-2 py-1 flex justify-start text-base font-medium transition-colors hover:text-black hover:bg-[#fafafa]",
+                              active ? "text-black bg-[#fafafa]" : "text-white bg-transparent",
+                            )}
                           >
                             <div>{item.name}</div>
-                          </Button>
+                          </div>
                         </Link>
                       </li>
                     );

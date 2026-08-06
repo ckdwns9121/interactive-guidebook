@@ -34,13 +34,21 @@
 - **오버레이 커서**: 오버레이 형태의 커스텀 커서
 - **마그네틱 커서**: 마그네틱 효과가 적용된 커서
 
+### Background (배경)
+
+- **노이즈 그레인 배경**: 노이즈 그레인 텍스처가 적용된 배경 효과
+- **도트 그리드 배경**: 도트 그리드 패턴의 인터랙티브 배경
+
+### Card (카드)
+
+- **글래스모피즘 카드**: 유리 질감(Glassmorphism)의 반투명 카드
+
 ## 🛠️ 기술 스택
 
-- **Framework**: Next.js 15.3.2 (App Router)
+- **Framework**: Next.js 15.3.8 (App Router)
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS v4
 - **Animation**: Framer Motion, GSAP
-- **Smooth Scrolling**: Lenis
 - **Testing**: Jest, React Testing Library
 - **UI Components**: Material-UI (MUI)
 - **Code Highlighting**: React Syntax Highlighter
@@ -109,46 +117,45 @@ interactive-guidebook/
 │   │   │   ├── typography/    # 타이포그래피 컴포넌트 문서
 │   │   │   ├── interaction/   # 인터랙션 컴포넌트 문서
 │   │   │   ├── cursor/        # 커서 컴포넌트 문서
+│   │   │   ├── background/    # 배경 컴포넌트 문서
+│   │   │   ├── card/          # 카드 컴포넌트 문서
 │   │   │   └── components/    # 문서 공통 컴포넌트
 │   │   ├── playground/        # 플레이그라운드
 │   │   └── globals.css        # 전역 스타일
 │   ├── components/            # 재사용 가능한 컴포넌트
-│   │   ├── common/           # 공통 컴포넌트
-│   │   │   ├── effects/      # 효과 컴포넌트
-│   │   │   ├── framer-motion/ # Framer Motion 컴포넌트
-│   │   │   │   ├── cursor/   # 커서 관련 컴포넌트
-│   │   │   │   └── typography/ # 타이포그래피 컴포넌트
-│   │   │   └── Lenis/        # 스크롤 관련 컴포넌트
-│   │   └── parallax/         # 패럴럭스 컴포넌트
+│   │   └── common/           # 공통 컴포넌트
+│   │       ├── docs-controls/ # 문서 데모 컨트롤 UI
+│   │       ├── effects/      # 효과 컴포넌트
+│   │       └── framer-motion/ # Framer Motion 컴포넌트
+│   │           ├── background/ # 배경 관련 컴포넌트
+│   │           ├── card/     # 카드 관련 컴포넌트
+│   │           ├── cursor/   # 커서 관련 컴포넌트
+│   │           └── typography/ # 타이포그래피 컴포넌트
 │   ├── hooks/                # 커스텀 훅
 │   ├── types/                # TypeScript 타입 정의
 │   ├── utils/                # 유틸리티 함수
-│   └── data/                 # 샘플 데이터
-├── public/                   # 정적 파일
-└── tests/                    # 테스트 파일
+│   ├── data/                 # 샘플 데이터
+│   ├── constants/            # 상수 정의
+│   └── styles/               # 스타일 관련 모듈
+└── public/                   # 정적 파일
 ```
 
 ## 🎨 디자인 시스템
 
-### 색상 팔레트
+Tailwind CSS v4의 CSS-first 방식을 사용하며, 디자인 토큰은 별도 설정 파일 없이 `src/app/globals.css`의 `@theme` 블록에서 정의합니다.
 
-- **Primary**: `#2563eb` (진한 파랑)
-- **Secondary**: `#3b82f6` (중간 파랑)
-- **Accent**: `#60a5fa` (밝은 파랑)
-- **Muted**: `#e0e7ef` (연한 파랑/회색)
+### 색상
+
+- **Background**: `#171717` (다크 배경)
+- **Foreground**: `#fff` (기본 텍스트)
 
 ### 폰트
 
-- **Sans**: Pretendard (기본 폰트)
-- **Title**: Pretendard (제목용 폰트)
+- **Sans**: Pretendard (기본 폰트, 시스템 폰트 폴백 포함)
 
 ### 반응형 브레이크포인트
 
-- **sm**: 640px
-- **md**: 768px
-- **lg**: 1024px
-- **xl**: 1280px
-- **2xl**: 1536px
+Tailwind CSS v4 기본 브레이크포인트(`sm` 640px ~ `2xl` 1536px)를 사용합니다.
 
 ## 🔧 개발 가이드라인
 
@@ -162,14 +169,14 @@ interactive-guidebook/
 ### Next.js
 
 - `useState`, `useEffect` 사용 시 'use client' 명시
-- `page.tsx`, `layout.tsx`는 서버 컴포넌트로 작성
+- 문서 페이지(`page.tsx`)는 인터랙티브 데모 특성상 대부분 클라이언트 컴포넌트('use client')로 작성됨. 인터랙션이 없는 페이지는 서버 컴포넌트 유지
 - `window` 속성 사용 전 타입 체크 필수
 
 ### 폴더 구조
 
 - `src/app/docs`: 개발한 컴포넌트의 문서 작성
 - `src/components`: 컴포넌트 폴더
-- `src/components/commons`: 공용 컴포넌트
+- `src/components/common`: 공용 컴포넌트
 
 ## 🧪 테스트
 
@@ -190,6 +197,8 @@ npm run test:watch
 - **Typography**: `/docs/typography/[component-name]`
 - **Interaction**: `/docs/interaction/[component-name]`
 - **Cursor**: `/docs/cursor/[component-name]`
+- **Background**: `/docs/background/[component-name]`
+- **Card**: `/docs/card/[component-name]`
 
 ## 🤝 기여하기
 
@@ -209,4 +218,3 @@ npm run test:watch
 - [Framer Motion Documentation](https://www.framer.com/motion/)
 - [GSAP Documentation](https://greensock.com/docs/)
 - [Tailwind CSS Documentation](https://tailwindcss.com/docs)
-- [Lenis Documentation](https://github.com/studio-freight/lenis)

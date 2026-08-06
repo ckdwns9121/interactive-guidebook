@@ -3,8 +3,31 @@
 import { ReactNode } from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
-import { Button } from "@mui/material";
-import { Visibility, Code, Description } from "@mui/icons-material";
+
+// 탭 아이콘 컴포넌트 (Material Design 아이콘 경로)
+function VisibilityIcon() {
+  return (
+    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z" />
+    </svg>
+  );
+}
+
+function DescriptionIcon() {
+  return (
+    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z" />
+    </svg>
+  );
+}
+
+function CodeIcon() {
+  return (
+    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M9.4 16.6 4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0 4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z" />
+    </svg>
+  );
+}
 
 interface TabInterfaceProps {
   activeTab: "preview" | "usage" | "code";
@@ -29,34 +52,16 @@ interface TabButtonProps {
 
 function TabButton({ isActive, onClick, icon, label }: TabButtonProps) {
   return (
-    <Button
-      variant="outlined"
+    <button
+      type="button"
       onClick={onClick}
-      startIcon={icon}
-      sx={{
-        backgroundColor: isActive ? "#1f2937" : "transparent",
-        color: "white",
-        borderColor: "white",
-        "&:hover": {
-          backgroundColor: isActive ? "#111827" : "rgba(255, 255, 255, 0.1)",
-          borderColor: "white",
-        },
-        textTransform: "none",
-        fontWeight: 500,
-        padding: "8px 16px",
-        borderRadius: "6px",
-        borderWidth: "1px",
-        marginRight: "16px",
-        "&.MuiButton-outlined": {
-          borderColor: "white",
-        },
-        "&:last-child": {
-          marginRight: 0,
-        },
-      }}
+      className={`mr-4 last:mr-0 inline-flex items-center gap-2 rounded-md border border-white px-4 py-2 text-sm font-medium text-white transition-colors ${
+        isActive ? "bg-[#1f2937] hover:bg-[#111827]" : "bg-transparent hover:bg-white/10"
+      }`}
     >
+      {icon}
       {label}
-    </Button>
+    </button>
   );
 }
 
@@ -239,18 +244,23 @@ export default function TabInterface({
         <TabButton
           isActive={activeTab === "preview"}
           onClick={() => onTabChange("preview")}
-          icon={<Visibility />}
+          icon={<VisibilityIcon />}
           label="Preview"
         />
 
         <TabButton
           isActive={activeTab === "usage"}
           onClick={() => onTabChange("usage")}
-          icon={<Description />}
+          icon={<DescriptionIcon />}
           label="Usage"
         />
 
-        <TabButton isActive={activeTab === "code"} onClick={() => onTabChange("code")} icon={<Code />} label="Code" />
+        <TabButton
+          isActive={activeTab === "code"}
+          onClick={() => onTabChange("code")}
+          icon={<CodeIcon />}
+          label="Code"
+        />
       </div>
 
       {/* Preview 탭 내용 */}
