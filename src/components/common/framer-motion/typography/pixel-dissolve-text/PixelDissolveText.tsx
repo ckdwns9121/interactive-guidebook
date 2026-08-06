@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 interface PixelDissolveTextProps {
   text: string;
@@ -67,21 +67,24 @@ const PixelDissolveText: React.FC<PixelDissolveTextProps> = ({
   const kernelCount = kernelSize * kernelSize;
   const kernelMatrix = new Array(kernelCount).fill((1 / kernelCount).toFixed(6)).join(" ");
 
-  const applyProgress = (p: number) => {
-    // 디졸브 마스크 업데이트
-    const transfer = transferRef.current;
-    if (transfer) {
-      transfer.setAttribute("tableValues", buildTableValues(p));
-    }
+  const applyProgress = useCallback(
+    (p: number) => {
+      // 디졸브 마스크 업데이트
+      const transfer = transferRef.current;
+      if (transfer) {
+        transfer.setAttribute("tableValues", buildTableValues(p));
+      }
 
-    // 픽셀화 스케일 업데이트: progress에 따라 convolve 필터의 영향도 증가
-    // morphology radius를 progress에 따라 키워서 픽셀 블록 느낌 강화
-    const scale = scaleRef.current;
-    if (scale) {
-      const radius = Math.round(p * pixelSize);
-      scale.setAttribute("radius", `${radius}`);
-    }
-  };
+      // 픽셀화 스케일 업데이트: progress에 따라 convolve 필터의 영향도 증가
+      // morphology radius를 progress에 따라 키워서 픽셀 블록 느낌 강화
+      const scale = scaleRef.current;
+      if (scale) {
+        const radius = Math.round(p * pixelSize);
+        scale.setAttribute("radius", `${radius}`);
+      }
+    },
+    [pixelSize]
+  );
 
   // 호버 트리거: rAF로 SVG 직접 구동
   useEffect(() => {
@@ -109,19 +112,22 @@ const PixelDissolveText: React.FC<PixelDissolveTextProps> = ({
     cancelAnimationFrame(animRef.current);
     animRef.current = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(animRef.current);
-  }, [isHovered, hoverTrigger, controlledProgress, duration]);
+  }, [isHovered, hoverTrigger, controlledProgress, duration, applyProgress]);
 
   // 외부 progress 제어
   useEffect(() => {
     if (controlledProgress === undefined) return;
     progressRef.current = controlledProgress;
     applyProgress(controlledProgress);
-  }, [controlledProgress]);
+  }, [controlledProgress, applyProgress]);
 
-  // 마운트 시 초기 필터 적용
+  // 마운트 시 초기 필터 적용 (1회만 실행)
+  const didInitRef = useRef(false);
   useEffect(() => {
+    if (didInitRef.current) return;
+    didInitRef.current = true;
     applyProgress(controlledProgress ?? 0);
-  }, []);
+  }, [controlledProgress, applyProgress]);
 
   return (
     <div

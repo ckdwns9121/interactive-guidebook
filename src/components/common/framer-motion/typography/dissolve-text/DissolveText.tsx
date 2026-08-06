@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 interface DissolveTextProps {
   text: string;
@@ -64,11 +64,11 @@ const DissolveText: React.FC<DissolveTextProps> = ({
   const [isHovered, setIsHovered] = useState(false);
 
   // SVG attribute 직접 업데이트 (리렌더 없이)
-  const applyProgress = (p: number) => {
+  const applyProgress = useCallback((p: number) => {
     const transfer = transferRef.current;
     if (!transfer) return;
     transfer.setAttribute("tableValues", buildTableValues(p));
-  };
+  }, []);
 
   // 호버 트리거: rAF로 SVG 직접 구동
   useEffect(() => {
@@ -97,19 +97,22 @@ const DissolveText: React.FC<DissolveTextProps> = ({
     cancelAnimationFrame(animRef.current);
     animRef.current = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(animRef.current);
-  }, [isHovered, hoverTrigger, controlledProgress, duration]);
+  }, [isHovered, hoverTrigger, controlledProgress, duration, applyProgress]);
 
   // 외부 progress 제어
   useEffect(() => {
     if (controlledProgress === undefined) return;
     progressRef.current = controlledProgress;
     applyProgress(controlledProgress);
-  }, [controlledProgress]);
+  }, [controlledProgress, applyProgress]);
 
-  // 마운트 시 초기 필터 적용
+  // 마운트 시 초기 필터 적용 (1회만 실행)
+  const didInitRef = useRef(false);
   useEffect(() => {
+    if (didInitRef.current) return;
+    didInitRef.current = true;
     applyProgress(controlledProgress ?? 0);
-  }, []);
+  }, [controlledProgress, applyProgress]);
 
   return (
     <div

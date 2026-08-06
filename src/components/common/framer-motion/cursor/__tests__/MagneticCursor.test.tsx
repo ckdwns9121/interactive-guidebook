@@ -1,6 +1,6 @@
 import "@testing-library/jest-dom";
 import { render, fireEvent } from "@testing-library/react";
-import { act } from "react-dom/test-utils";
+import { act } from "react";
 import MagneticCursor from "../MagneticCursor";
 
 // 모바일 환경 모킹을 위한 유틸리티 함수
@@ -49,10 +49,7 @@ describe("MagneticCursor", () => {
     });
 
     const cursor = container.querySelector("div");
-    expect(cursor).toHaveStyle({
-      position: "fixed",
-      pointerEvents: "none",
-    });
+    expect(cursor).toHaveClass("fixed", "pointer-events-none");
   });
 
   it("마그네틱 타겟 진입 시 커서 크기가 변경되어야 함", () => {
